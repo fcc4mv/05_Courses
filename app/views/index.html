@@ -1,8 +1,52 @@
-<html>
-  <head>
-    <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
-  </head>
-  <body>
-    The best place to start is the "WelcomeController.py" file in app/controllers.
-  </body>
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+	<meta charset="utf-8">
+	<title>Add a student to all bootcamp courses</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+
+<body>
+	<h2>Add a new course</h2>
+	<form action='/courses/add' method='POST'>
+		<h3>Name:</h3>
+
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for message in messages %}
+					<h3>{{ message }}</h3>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+
+		<input type="text" name="name">
+		<h3>Description (optional):</h3>
+		<input type="text" name="description">
+		<br>
+		<input type="submit" value="Add">
+	</form>
+
+	<div>
+		<h3>Courses:</h3>
+		<table style="width: 80%">
+			<tr>
+				<td>Course Name</td>
+				<td>Description</td>
+				<td>Date Added</td>
+				<td>Actions</td>
+			</tr>
+
+			{% for x in courses%}
+			<tr>
+				<td>{{x.name}}</td>
+				<td>{{x.description}}</td>
+				<td>{{x.created_at}}</td>
+				<td><a href="/courses/destroy/{{x.id}}">Remove</a></td>
+			</tr>
+			{%endfor%}		
+		</table>
+	</div>
+</body>
+
 </html>
